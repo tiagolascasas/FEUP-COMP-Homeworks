@@ -1,0 +1,77 @@
+PARSER_BEGIN(Scanner)
+
+import java.io.*;
+
+public class Scanner {
+
+  public static void main(String[] args) throws FileNotFoundException
+  {
+  
+	Scanner TokenManager;
+
+    if ( args.length == 2 ) {
+		InputStream stream = new FileInputStream(args[0]);
+		TokenManager = new Scanner(stream);
+    } else {
+		TokenManager = new Scanner(System.in);
+	}
+
+	Token OneToken;
+    do {
+        OneToken = TokenManager.getNextToken();
+
+        switch(OneToken.kind) {
+
+         case LPAR:     System.out.println("LPAR ");
+           break;
+         case RPAR:     System.out.println("RPAR ");
+           break;
+         case MUL:      System.out.println("MUL");
+           break;
+         case DIV:      System.out.println("DIV ");
+           break;
+         case PLUS:     System.out.println("PLUS ");
+           break;
+         case SUB:      System.out.println("SUB ");
+	       break;
+	     case EQ:       System.out.println("EQ ");
+	       break;
+	     case SMICOLON: System.out.println("SMICOLON ");
+	       break;
+	     //print only the images of INT and VAR because the others are always the same
+	     case INT:      System.out.println("INT(" + OneToken.image + ") ");
+	       break;
+	     case VAR:      System.out.println("VAR(" + OneToken.image + ") ");
+	       break;
+         default:
+           if ( OneToken.kind != EOF )
+             System.out.println("Unknown string found: " + OneToken.image);
+           break;
+        }
+    } while (OneToken.kind != EOF);
+  }
+}
+
+PARSER_END(Scanner)
+
+SKIP: 
+{
+  "\t"
+| "\r"
+| "\n"
+| " "
+}
+
+TOKEN:
+{
+   <LPAR:     "(" >
+|  <RPAR:     ")" >
+|  <MUL:      "*" >
+|  <DIV:      "/" >
+|  <PLUS:     "+" >
+|  <SUB:      "-" >
+|  <INT:      (["0"-"9"])+ >
+|  <VAR:      ["A"-"Z","a"-"z"](["0"-"9","A"-"Z","a"-"z"])* >
+|  <EQ:       "=" >
+|  <SMICOLON: ";" >
+}

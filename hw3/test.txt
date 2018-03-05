@@ -1,0 +1,3 @@
+variable = variable1;
+variable2 = 1*(2+3)\(5-4);
+varX = 2
