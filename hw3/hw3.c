@@ -84,7 +84,7 @@ int main(int argc, char** argv)
 
     char** tokens = scanTokens(inputString);
 
-    printf("\nLexical analysis: string is %s\n", tokens == NULL ? "invalid" : "valid");
+    printf("\n\nLexical analysis: string is %s\n\n", tokens == NULL ? "invalid" : "valid");
     if (tokens == NULL)
         return -1;
 
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
     }*/
 
     char valid = verifyGrammar(tokens);
-    printf("\nSyntactic analysis: string is %s\n", valid ? "valid" : "invalid");
+    printf("\n\nSyntactic analysis: string is %s\n", valid ? "valid" : "invalid");
 
     return 0;
 }
@@ -225,7 +225,7 @@ S -> VAR EQ T
 T -> INT SMICOLON S | E
 E -> Rhs SMICOLON
 
-Rhs -> RA RPLUS     //assure operator priority: +- have less, while () have more
+Rhs -> RA RPLUS
 RA -> RB RSUB
 RB -> RC RDIV
 RC -> RD RMUL

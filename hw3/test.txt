@@ -1,3 +1,2 @@
-variable = variable1;
-variable2 = 1*(2+3)\(5-4);
-varX = 2
+variable = 1
+variable2 = X1*(X2+X3)\(X5-X4);
