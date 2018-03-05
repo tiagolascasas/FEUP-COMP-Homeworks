@@ -1,0 +1,26 @@
+Homework #1
+Without using a scanner or parser generator, implement a scanner for a language with the following tokens:
+
+LPAR=“(“
+
+RPAR=“)”
+
+MUL=“*”
+
+DIV=“\”
+
+PLUS=“+”
+
+SUB=“-”
+
+INT=[0-9]+
+
+VAR=[A-Za-z][0-9A-Za-z]*
+
+EQ=“=“
+
+SMICOLON=“;”
+The scanner shall receive as input a string or a file and shall output the sequence of tokens in the input or shall report possible errors!
+
+Note: skip the symbol: “\n”, “\r”, “ “, “\t”
+PS: show your solution here!

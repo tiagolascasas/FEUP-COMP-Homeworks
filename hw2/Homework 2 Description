@@ -1,0 +1,91 @@
+Homework #2
+
+Using a scanner or parser generator (e.g., JavaCC), implement a scanner for a language with the following tokens:
+
+LPAR=“(“
+
+RPAR=“)”
+
+MUL=“*”
+
+DIV=“\”
+
+PLUS=“+”
+
+SUB=“-”
+
+INT=[0-9]+
+
+VAR=[A-Za-z][0-9A-Za-z]*
+
+EQ=“=“
+
+SMICOLON=“;”
+The scanner shall receive as input a string or a file and shall output the sequence of tokens in the input or shall report possible errors!
+Note: skip the symbol: “\n”, “\r”, “ “, “\t”
+PS: show your solution here!
+
+
+Possible use of JavaCC for scanning and without the need to include grammar rules:
+
+PARSER_BEGIN(Scanner)
+
+import java.io.*;
+
+public class Scanner {
+
+  public static void main(String[] args) throws FileNotFoundException
+  {
+
+	Scanner TokenManager;
+
+    if ( args.length == 2 ) {
+		InputStream stream = new FileInputStream(args[0]);
+		TokenManager = new Scanner(stream);
+    } else {
+		TokenManager = new Scanner(System.in);
+	}
+
+	Token OneToken;
+    do {
+        OneToken = TokenManager.getNextToken();
+
+        switch(OneToken.kind) {
+
+         case LPAREN:    System.out.println("LPAREN:    " + OneToken.image);
+           break;
+         case RPAREN:    System.out.println("RPAREN:    " + OneToken.image);
+           break;
+         case ADDSUB_OP:    System.out.println("ADDSUB_OP:    " + OneToken.image);
+           break;
+         case MULTDIV_OP:   System.out.println("MULTDIV_OP:   " + OneToken.image);
+           break;
+         case NUMBER:    System.out.println("NUMBER:    " + OneToken.image);
+           break;
+         default:
+           if ( OneToken.kind != EOF )
+             System.out.println("OTHER: " + OneToken.image);
+           break;
+        }
+    } while (OneToken.kind != EOF);
+  }
+}
+
+PARSER_END(Scanner)
+
+SKIP:
+{
+  "\t"
+| "\r"
+| "\n"
+| " "
+}
+
+TOKEN:
+{
+   <ADDSUB_OP:    "+" | "-" >
+|  <MULTDIV_OP:   "*" | "/" >
+|  <NUMBER:    (["0"-"9"])+ >
+|  <LPAREN:    "(" >
+|  <RPAREN:    ")" >
+}
