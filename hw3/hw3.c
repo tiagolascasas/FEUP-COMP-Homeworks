@@ -77,9 +77,10 @@ int main(int argc, char** argv)
     }
     else
     {
-        printf("Input: ");
-        char* inputString = (char*)calloc(1024, sizeof(char));
-        fgets(inputString, 1024, stdin);
+        //removed input via stdin because the buffer was of limited size and it
+        //didn't work well with newlines
+        printf("Usage: hw3 filename\n");
+        return -1;
     }
 
     char** tokens = scanTokens(inputString);
@@ -87,12 +88,6 @@ int main(int argc, char** argv)
     printf("\n\nLexical analysis: string is %s\n\n", tokens == NULL ? "invalid" : "valid");
     if (tokens == NULL)
         return -1;
-
-/*
-    for (int x = 0; x < 128; x++)
-    {
-        printf("%s ", tokens[x]);
-    }*/
 
     char valid = verifyGrammar(tokens);
     printf("\n\nSyntactic analysis: string is %s\n", valid ? "valid" : "invalid");
@@ -220,7 +215,7 @@ void addToken(char** tokens, int* i, State old, State new, char c)
 }
 
 /*
-Grammar:
+Modified grammar:
 S -> VAR EQ T
 T -> INT SMICOLON S | E
 E -> Rhs SMICOLON
