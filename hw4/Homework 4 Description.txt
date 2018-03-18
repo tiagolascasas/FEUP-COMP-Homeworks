@@ -1,0 +1,12 @@
+Homework #4
+
+Using JavaCC and a lookahead=1, implement  a parser for the following context free grammar (CFG):
+S ->  VAR EQ INT SMICOLON  S | E
+E ->  VAR EQ Rhs SMICOLON
+Rhs -> Rhs PLUS Rhs | Rhs MUL Rhs | Rhs DIV Rhs | Rhs SUB Rhs | LPAR Rhs RPAR| VAR
+
+The parser shall receive as input a string or a text file and shall indicate if the String or text belong to the language represented by this CFG!
+
+Note: skip the symbol: “\n”, “\r”, “ “, “\t”
+
+PS: show your solution here!

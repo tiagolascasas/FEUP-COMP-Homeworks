@@ -1,0 +1,150 @@
+options
+{
+	LOOKAHEAD=1;
+}
+
+PARSER_BEGIN(HW4)
+
+//To run: java HW4 [filename]
+
+import java.io.*;
+
+public class HW4
+{
+	public static void main(String[] args)
+	{
+	  	InputStream stream = null;
+	  	try
+	  	{
+			stream = (args.length == 1 ? new FileInputStream(args[0]) : System.in);
+	  	}
+	  	catch (Exception e)
+	  	{
+			System.out.println("Input error: " + e.getMessage());
+			System.exit(1);
+	  	}
+	  	HW4 tokens = null;
+	  	try
+	  	{
+			tokens = new HW4(stream);
+	  	}
+	  	catch (Exception e)
+	  	{
+			System.out.println("Lexical error: " + e.getMessage());
+			System.exit(1);
+	  	}
+		try
+		{
+			tokens.S();
+		}
+		catch (Exception e)
+		{
+			System.out.println("Syntactical error: " + e.getMessage());
+			System.exit(1);
+		}
+		System.out.println("String is lexically and syntactically valid");
+		System.exit(0);
+	}
+}
+
+PARSER_END(HW4)
+
+SKIP: 
+{
+  "\t"
+| "\r"
+| "\n"
+| " "
+}
+
+TOKEN:
+{
+   <LPAR:     "(" >
+|  <RPAR:     ")" >
+|  <MUL:      "*" >
+|  <DIV:      "\\" >
+|  <PLUS:     "+" >
+|  <SUB:      "-" >
+|  <INT:      (["0"-"9"])+ >
+|  <VAR:      ["A"-"Z","a"-"z"](["0"-"9","A"-"Z","a"-"z"])* >
+|  <EQ:       "=" >
+|  <SMICOLON: ";" >
+}
+
+/*
+Modified grammar (same as HW3):
+S -> VAR EQ T
+T -> INT SMICOLON S | E
+E -> Rhs SMICOLON
+
+Rhs -> RA RPLUS
+RA -> RB RSUB
+RB -> RC RDIV
+RC -> RD RMUL
+RD -> VAR | LPAR Rhs RPAR
+
+RPLUS -> PLUS Rhs | ε
+RSUB -> SUB RA | ε
+RDIV -> DIV RB | ε
+RMUL -> MUL RC | ε
+*/
+
+void S(): {}
+{
+	< VAR > <EQ > T()
+}
+
+void T(): {}
+{
+	< INT > <SMICOLON > S() | E()
+}
+
+void E(): {}
+{
+	Rhs() < SMICOLON >
+}
+
+void Rhs(): {}
+{
+	RA() RPLUS()
+}
+
+void RA(): {}
+{
+	RB() RSUB()
+}
+
+void RB(): {}
+{
+	RC() RDIV()
+}
+
+void RC(): {}
+{
+	RD() RMUL()
+}
+
+void RD(): {}
+{
+	< VAR > | < LPAR > Rhs() < RPAR >
+}
+
+void RPLUS(): {}
+{
+	< PLUS > Rhs() | { }
+}
+
+void RSUB(): {}
+{
+	< SUB > Rhs() | { }
+}
+
+void RDIV(): {}
+{
+	< DIV > Rhs() | { }
+}
+
+void RMUL(): {}
+{
+	< MUL > Rhs() | { }
+}
