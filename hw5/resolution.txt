@@ -1,0 +1,11 @@
+1) Em C, o endereço do início de cada linha de uma matriz depende do tamanho dessas linhas. Por exemplo, A[0][0] e A[1][0] distanciam de N unidades, em que N é o tamanho das linhas. Ao passar uma matrix A[][] como argumento não se está a especificar qual o tamanho das linhas, o que torna impossível calcular os endereços. Se se passasse A[][N], então já seria possível.
+
+2) Em Fortran e Matlab, por exemplo, as matrizes são organizadas colocando as colunas sequencialmente em memória em vez de se colocar as linhas.
+
+3) Em Java, uma matriz é um array com referências para outros arrays com qualquer tamanho e que podem estar mapeados em zonas diferentes de memória. Portanto, dado que uma matriz não é mais do que um array unidimensional de referências, não é necessário calcular endereços como se faria em C.
+
+4) B + (t + j*4 + i*8) * 4
+
+5) B + (in + in-1*Sn + in-2*(Sn*Sn-1) + ... + i1*(Sn * ... * S2)) * 4
+
+6) No exemplo original, os acessos eram feitos sequencialmente em coluna, enquanto que com a versão optimizada são feitos sequencialmente em linha. Dado que em C as matrizes estão mapeadas linha a linha, os acessos na versão otimizada são consecutivos ao nível da memória, enquanto que na versão original involvem acessos que distam 5000*4 posições de memória entre si. A versão otimizada é, portanto, mais rápida, pois ao ter acessos a memória consecutivos está-se a evitar muitos cache misses, sendo que essas situações implicam um acréscimo de tempo significativo de modo a serem resolvidas.
